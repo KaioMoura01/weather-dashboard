@@ -1,0 +1,106 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+
+/* Dark mode driven by a class on <html> (toggled by ThemeModule). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+	--font-sans:
+		'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+	--color-surface: hsl(210 40% 98%);
+	--color-surface-elevated: hsl(0 0% 100%);
+	--color-border-subtle: hsl(214 32% 91%);
+	--color-content: hsl(222 47% 11%);
+	--color-content-muted: hsl(215 16% 47%);
+	--color-brand: hsl(217 91% 60%);
+	--color-brand-contrast: hsl(0 0% 100%);
+}
+
+.dark {
+	--color-surface: hsl(222 47% 11%);
+	--color-surface-elevated: hsl(217 33% 17%);
+	--color-border-subtle: hsl(217 19% 27%);
+	--color-content: hsl(210 40% 98%);
+	--color-content-muted: hsl(215 20% 65%);
+	--color-brand: hsl(217 91% 65%);
+	--color-brand-contrast: hsl(222 47% 11%);
+}
+
+/* Typography scale mandated by CLAUDE.md. */
+@utility title-sm {
+	font-weight: 600;
+	font-size: 1rem;
+	line-height: 1.5rem;
+}
+@utility title-md {
+	font-weight: 600;
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+}
+@utility title-lg {
+	font-weight: 700;
+	font-size: 1.875rem;
+	line-height: 2.25rem;
+}
+@utility title-xl {
+	font-weight: 700;
+	font-size: 3rem;
+	line-height: 1;
+	letter-spacing: -0.02em;
+}
+
+@utility paragraph-sm {
+	font-weight: 400;
+	font-size: 0.8125rem;
+	line-height: 1.25rem;
+}
+@utility paragraph-md {
+	font-weight: 400;
+	font-size: 0.9375rem;
+	line-height: 1.5rem;
+}
+@utility paragraph-lg {
+	font-weight: 400;
+	font-size: 1.125rem;
+	line-height: 1.75rem;
+}
+@utility paragraph-xl {
+	font-weight: 400;
+	font-size: 1.375rem;
+	line-height: 2rem;
+}
+
+@utility label-sm {
+	font-weight: 500;
+	font-size: 0.6875rem;
+	line-height: 1rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+@utility label-md {
+	font-weight: 500;
+	font-size: 0.75rem;
+	line-height: 1rem;
+	letter-spacing: 0.03em;
+}
+@utility label-lg {
+	font-weight: 600;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+}
+@utility label-xl {
+	font-weight: 600;
+	font-size: 1rem;
+	line-height: 1.5rem;
+}
+
+html {
+	font-family: var(--font-sans);
+	background-color: var(--color-surface);
+	color: var(--color-content);
+}
+
+body {
+	min-height: 100dvh;
+}
