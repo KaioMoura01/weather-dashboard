@@ -9,16 +9,23 @@
 </script>
 
 <header class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-	<div class="flex shrink-0 items-center gap-2 text-content">
-		<MapPin class="size-5 text-brand" />
-		<span class="title-sm">{location}</span>
+	<div class="flex shrink-0 items-center justify-between gap-2 text-content">
+		<div class="flex items-center gap-2">
+			<MapPin class="size-5 text-brand" />
+			<span class="title-sm">{location}</span>
+		</div>
+		<!-- Mobile: toggle ao lado da localização. -->
+		<div class="sm:hidden">
+			<ThemeToggle />
+		</div>
 	</div>
 
-	<div class="flex-1 sm:max-w-md sm:mx-auto">
+	<div class="flex-1 sm:mx-auto sm:max-w-md">
 		<CommandPalette />
 	</div>
 
-	<div class="shrink-0 self-end sm:self-auto">
+	<!-- Desktop: toggle à direita. -->
+	<div class="hidden shrink-0 sm:block">
 		<ThemeToggle />
 	</div>
 </header>
