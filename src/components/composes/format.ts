@@ -13,3 +13,17 @@ export function formatTime(isoTime: string): string {
 export function formatTemperature(value: number): string {
 	return `${value}°`;
 }
+
+export function formatHour(isoTime: string): string {
+	return `${new Date(isoTime).getHours()}h`;
+}
+
+export function isoDateOf(isoTime: string): string {
+	return isoTime.slice(0, 10);
+}
+
+export function formatFullDate(isoDate: string): string {
+	return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'long' }).format(
+		new Date(`${isoDate}T12:00:00`)
+	);
+}

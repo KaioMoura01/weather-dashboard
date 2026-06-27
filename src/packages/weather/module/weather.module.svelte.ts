@@ -1,9 +1,11 @@
 import { ZodError } from 'zod';
+import { geolocationGateway } from '../../geolocation/gateway/geolocation.gateway';
 import { historyModule } from '../../history/module/history.module.svelte';
 import { notificationsModule } from '../../notifications/module/notifications.module';
+import { FALLBACK_CITY } from '../constants/cities';
 import { weatherService } from '../service/weather.service';
 import { weatherMessages } from '../toast/messages';
-import type { City, WeatherSnapshot } from '../types/domain';
+import type { City, ForecastDay, WeatherSnapshot } from '../types/domain';
 import { WeatherError, type WeatherErrorCode } from '../types/errors';
 
 type Status = 'idle' | 'searching' | 'loading' | 'ready' | 'error';
@@ -19,6 +21,8 @@ class WeatherModule {
 	private statusValue = $state<Status>('idle');
 	private resultsValue = $state<City[]>([]);
 	private snapshotValue = $state<WeatherSnapshot | null>(null);
+	private selectedIndexValue = $state(0);
+	private locatingValue = $state(false);
 
 	get status(): Status {
 		return this.statusValue;
@@ -32,8 +36,43 @@ class WeatherModule {
 		return this.snapshotValue;
 	}
 
+	get selectedIndex(): number {
+		return this.selectedIndexValue;
+	}
+
+	get selectedDay(): ForecastDay | null {
+		return this.snapshotValue?.forecast[this.selectedIndexValue] ?? null;
+	}
+
+	get isToday(): boolean {
+		return this.selectedIndexValue === 0;
+	}
+
 	get isBusy(): boolean {
-		return this.statusValue === 'searching' || this.statusValue === 'loading';
+		return this.statusValue === 'searching' || this.statusValue === 'loading' || this.locatingValue;
+	}
+
+	selectDay(index: number): void {
+		this.selectedIndexValue = index;
+	}
+
+	/** Bootstrap: tenta geolocalização do usuário; cai na cidade padrão se negada. */
+	async locate(): Promise<void> {
+		if (this.snapshotValue) {
+			return;
+		}
+
+		this.locatingValue = true;
+
+		try {
+			const coords = await geolocationGateway.current();
+			const city = await weatherService.reverseGeocode(coords.lat, coords.lon);
+			await this.select(city);
+		} catch {
+			await this.select(FALLBACK_CITY);
+		} finally {
+			this.locatingValue = false;
+		}
 	}
 
 	async search(rawQuery: string): Promise<void> {
@@ -53,9 +92,9 @@ class WeatherModule {
 
 		try {
 			this.snapshotValue = await weatherService.loadSnapshot(city);
+			this.selectedIndexValue = 0;
 			this.statusValue = 'ready';
 			historyModule.record(city);
-			notificationsModule.notifySuccess(weatherMessages.loaded(city.name));
 		} catch (error) {
 			this.fail(error);
 		}

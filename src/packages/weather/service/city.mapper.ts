@@ -17,7 +17,7 @@ export function toCities(dtos: GeoResultDTO[]): City[] {
 }
 
 function resolveName(dto: GeoResultDTO): string {
-	return placeFromAddress(dto.address) ?? dto.name ?? dto.display_name.split(',')[0];
+	return placeFromAddress(dto.address) ?? dto.name ?? firstSegment(dto.display_name);
 }
 
 function placeFromAddress(address?: NominatimAddressDTO): string | undefined {
@@ -26,4 +26,8 @@ function placeFromAddress(address?: NominatimAddressDTO): string | undefined {
 	}
 
 	return address.city ?? address.town ?? address.village ?? address.municipality;
+}
+
+function firstSegment(displayName?: string): string {
+	return displayName?.split(',')[0] ?? 'Local desconhecido';
 }

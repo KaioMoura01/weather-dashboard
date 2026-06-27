@@ -11,6 +11,10 @@ export function toForecastDays(dto: ForecastResponseDTO): ForecastDay[] {
 		min: Math.round(daily.temperature_2m_min[index]),
 		max: Math.round(daily.temperature_2m_max[index]),
 		description: describeWeatherCode(daily.weather_code[index]),
-		weatherCode: daily.weather_code[index]
+		weatherCode: daily.weather_code[index],
+		sunrise: daily.sunrise[index],
+		sunset: daily.sunset[index],
+		windMax: Math.round(daily.wind_speed_10m_max[index]),
+		rainChance: daily.precipitation_probability_max[index] ?? 0
 	}));
 }
