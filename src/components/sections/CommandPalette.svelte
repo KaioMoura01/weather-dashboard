@@ -54,11 +54,17 @@
 		}
 	});
 
-	// Fecha quando uma cidade é carregada com sucesso.
+	// Fecha apenas quando um snapshot NOVO chega (cidade recém-carregada),
+	// não enquanto o status permanece 'ready' — senão o modal fecharia ao reabrir.
+	let lastSnapshot = weatherModule.snapshot;
 	$effect(() => {
-		if (open && weatherModule.status === 'ready') {
+		const snapshot = weatherModule.snapshot;
+
+		if (open && snapshot && snapshot !== lastSnapshot) {
 			closePalette();
 		}
+
+		lastSnapshot = snapshot;
 	});
 </script>
 
