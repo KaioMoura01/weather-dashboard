@@ -61,6 +61,7 @@
 	};
 
 	const Icon = $derived(resolveIcon(code, isDay));
+	const colorClass = $derived(className || 'text-brand');
 
 	function resolveIcon(weatherCode: number, day: boolean): ComponentType {
 		const pair = DAY_NIGHT[weatherCode];
@@ -73,4 +74,4 @@
 	}
 </script>
 
-<Icon size={size} class="text-brand {className}" />
+<Icon size={size} class={colorClass} />

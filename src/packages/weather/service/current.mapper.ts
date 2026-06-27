@@ -13,6 +13,7 @@ export function toCurrentWeather(dto: ForecastResponseDTO, city: City): CurrentW
 		feelsLike: Math.round(current.apparent_temperature),
 		humidity: current.relative_humidity_2m,
 		windSpeed: Math.round(current.wind_speed_10m),
+		pressure: Math.round(current.surface_pressure),
 		description: describeWeatherCode(current.weather_code),
 		weatherCode: current.weather_code,
 		isDay: current.is_day === 1

@@ -15,6 +15,7 @@ export interface CurrentWeather {
 	feelsLike: number;
 	humidity: number;
 	windSpeed: number;
+	pressure: number;
 	description: string;
 	weatherCode: number;
 	isDay: boolean;
@@ -26,6 +27,15 @@ export interface ForecastDay {
 	max: number;
 	description: string;
 	weatherCode: number;
+	sunrise: string;
+	sunset: string;
+	windMax: number;
+	rainChance: number;
+}
+
+export interface HourlyPrecip {
+	isoTime: string;
+	probability: number;
 }
 
 export interface TidePoint {
@@ -43,5 +53,14 @@ export interface WeatherSnapshot {
 	city: City;
 	current: CurrentWeather;
 	forecast: ForecastDay[];
+	hourly: HourlyPrecip[];
 	tide: TideReport;
+}
+
+export interface CityBrief {
+	city: City;
+	temp: number;
+	description: string;
+	weatherCode: number;
+	isDay: boolean;
 }
