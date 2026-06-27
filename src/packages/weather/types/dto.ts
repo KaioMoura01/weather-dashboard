@@ -1,16 +1,21 @@
-/** Raw response shapes returned by Open-Meteo APIs. Validated by Zod before use. */
+/** Raw response shapes returned by external APIs. Validated by Zod before use. */
 
-export interface GeoResultDTO {
-	name: string;
-	latitude: number;
-	longitude: number;
+export interface NominatimAddressDTO {
 	country?: string;
-	country_code?: string;
-	admin1?: string;
+	state?: string;
+	city?: string;
+	town?: string;
+	village?: string;
+	municipality?: string;
+	county?: string;
 }
 
-export interface GeoResponseDTO {
-	results?: GeoResultDTO[];
+export interface GeoResultDTO {
+	name?: string;
+	display_name: string;
+	lat: string;
+	lon: string;
+	address?: NominatimAddressDTO;
 }
 
 export interface ForecastResponseDTO {
@@ -20,6 +25,7 @@ export interface ForecastResponseDTO {
 		relative_humidity_2m: number;
 		wind_speed_10m: number;
 		weather_code: number;
+		is_day: number;
 	};
 	daily: {
 		time: string[];

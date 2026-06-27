@@ -17,6 +17,7 @@ export interface CurrentWeather {
 	windSpeed: number;
 	description: string;
 	weatherCode: number;
+	isDay: boolean;
 }
 
 export interface ForecastDay {

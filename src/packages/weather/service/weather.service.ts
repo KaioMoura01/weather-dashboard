@@ -10,8 +10,8 @@ import { toTideReport } from './tide.mapper';
 export const weatherService = {
 	async searchCities(rawQuery: string): Promise<City[]> {
 		const query = citySearchSchema.parse(rawQuery);
-		const response = await weatherGateway.searchCities(query);
-		return toCities(response.results ?? []);
+		const results = await weatherGateway.searchCities(query);
+		return toCities(results);
 	},
 
 	async loadSnapshot(city: City): Promise<WeatherSnapshot> {

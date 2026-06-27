@@ -5,26 +5,34 @@
 		CloudDrizzle,
 		CloudFog,
 		CloudLightning,
+		CloudMoon,
 		CloudRain,
 		CloudRainWind,
 		CloudSnow,
 		CloudSun,
+		Moon,
 		Snowflake,
 		Sun
 	} from 'lucide-svelte';
 
 	interface Props {
 		code: number;
+		isDay?: boolean;
 		size?: number;
 		class?: string;
 	}
 
-	const { code, size = 64, class: className = '' }: Props = $props();
+	const { code, isDay = true, size = 64, class: className = '' }: Props = $props();
 
-	const ICONS: Record<number, ComponentType> = {
-		0: Sun,
-		1: CloudSun,
-		2: CloudSun,
+	// Only sky-visible conditions get a day/night variant (sol/lua).
+	// Overcast, fog, rain, snow and storm hide the astros → ícone neutro.
+	const DAY_NIGHT: Record<number, [ComponentType, ComponentType]> = {
+		0: [Sun, Moon],
+		1: [Sun, Moon],
+		2: [CloudSun, CloudMoon]
+	};
+
+	const NEUTRAL: Record<number, ComponentType> = {
 		3: Cloud,
 		45: CloudFog,
 		48: CloudFog,
@@ -52,7 +60,17 @@
 		99: CloudLightning
 	};
 
-	const Icon = $derived(ICONS[code] ?? Cloud);
+	const Icon = $derived(resolveIcon(code, isDay));
+
+	function resolveIcon(weatherCode: number, day: boolean): ComponentType {
+		const pair = DAY_NIGHT[weatherCode];
+
+		if (pair) {
+			return day ? pair[0] : pair[1];
+		}
+
+		return NEUTRAL[weatherCode] ?? Cloud;
+	}
 </script>
 
 <Icon size={size} class="text-brand {className}" />

@@ -14,6 +14,7 @@ export function toCurrentWeather(dto: ForecastResponseDTO, city: City): CurrentW
 		humidity: current.relative_humidity_2m,
 		windSpeed: Math.round(current.wind_speed_10m),
 		description: describeWeatherCode(current.weather_code),
-		weatherCode: current.weather_code
+		weatherCode: current.weather_code,
+		isDay: current.is_day === 1
 	};
 }

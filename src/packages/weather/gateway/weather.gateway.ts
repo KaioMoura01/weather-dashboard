@@ -5,27 +5,28 @@ import {
 	WIND_SPEED_UNIT
 } from '../constants/config';
 import {
+	NOMINATIM_SEARCH_URL,
 	OPEN_METEO_FORECAST_URL,
-	OPEN_METEO_GEO_URL,
 	OPEN_METEO_MARINE_URL
 } from '../constants/endpoints';
 import type { City } from '../types/domain';
-import type { ForecastResponseDTO, GeoResponseDTO, MarineDTO } from '../types/dto';
+import type { ForecastResponseDTO, GeoResultDTO, MarineDTO } from '../types/dto';
 import { forecastResponseSchema, geoResponseSchema, marineSchema } from '../validators/schemas';
 import { getJson } from './http-client';
 
 const CURRENT_FIELDS =
-	'temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code';
+	'temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code,is_day';
 const DAILY_FIELDS = 'weather_code,temperature_2m_max,temperature_2m_min';
 
 /** HTTP boundary for the weather domain. Builds URLs, never applies business rules. */
 export const weatherGateway = {
-	searchCities(query: string): Promise<GeoResponseDTO> {
-		const url = withParams(OPEN_METEO_GEO_URL, {
-			name: query,
-			count: String(GEO_RESULT_LIMIT),
-			language: GEO_LANGUAGE,
-			format: 'json'
+	searchCities(query: string): Promise<GeoResultDTO[]> {
+		const url = withParams(NOMINATIM_SEARCH_URL, {
+			q: query,
+			format: 'jsonv2',
+			addressdetails: '1',
+			limit: String(GEO_RESULT_LIMIT),
+			'accept-language': GEO_LANGUAGE
 		});
 		return getJson(url, geoResponseSchema);
 	},

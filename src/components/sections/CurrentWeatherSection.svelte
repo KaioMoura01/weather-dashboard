@@ -28,7 +28,7 @@
 				</span>
 			</div>
 		</div>
-		<WeatherIcon code={current.weatherCode} size={96} />
+		<WeatherIcon code={current.weatherCode} isDay={current.isDay} size={96} />
 	</div>
 
 	<div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
