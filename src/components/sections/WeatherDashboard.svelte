@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { RotateCcw } from 'lucide-svelte';
 	import Spinner from '$components/composes/Spinner.svelte';
 	import { citiesModule } from '$packages/weather/module/cities.module.svelte';
 	import { weatherModule } from '$packages/weather/module/weather.module.svelte';
@@ -10,6 +11,7 @@
 	import TopBar from './common/TopBar.svelte';
 
 	const snapshot = $derived(weatherModule.snapshot);
+	const failed = $derived(weatherModule.status === 'error' && !snapshot);
 
 	onMount(() => {
 		weatherModule.locate();
@@ -26,6 +28,19 @@
 			<RainChart class="lg:col-span-1" />
 			<DayStrip class="lg:col-span-3" />
 			<OtherCities class="lg:col-span-3" />
+		</div>
+	{:else if failed}
+		<div class="grid place-items-center gap-3 py-24 text-center">
+			<p class="paragraph-md text-content-muted">
+				Não foi possível carregar o clima. Verifique sua conexão ou busque uma cidade.
+			</p>
+			<button
+				type="button"
+				onclick={() => weatherModule.locate()}
+				class="label-lg bg-brand text-brand-contrast glow-brand flex items-center gap-2 rounded-lg px-4 py-2 transition-opacity hover:opacity-90"
+			>
+				<RotateCcw class="size-4" /> Tentar novamente
+			</button>
 		</div>
 	{:else}
 		<div class="grid place-items-center py-24">
