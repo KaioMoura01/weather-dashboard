@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { RotateCcw } from 'lucide-svelte';
-	import Spinner from '$components/composes/Spinner.svelte';
 	import { citiesModule } from '$packages/weather/module/cities.module.svelte';
 	import { weatherModule } from '$packages/weather/module/weather.module.svelte';
 	import DayStrip from './DayStrip.svelte';
 	import OtherCities from './OtherCities.svelte';
 	import RainChart from './RainChart.svelte';
 	import SelectedDayCard from './SelectedDayCard.svelte';
+	import WeatherSkeleton from './WeatherSkeleton.svelte';
 	import TopBar from './common/TopBar.svelte';
 
 	const snapshot = $derived(weatherModule.snapshot);
@@ -43,8 +43,6 @@
 			</button>
 		</div>
 	{:else}
-		<div class="grid place-items-center py-24">
-			<Spinner label="Carregando o clima da sua região…" />
-		</div>
+		<WeatherSkeleton />
 	{/if}
 </div>

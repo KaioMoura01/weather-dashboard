@@ -80,12 +80,3 @@ export const reverseGeoSchema = z.object({
 		.optional()
 });
 
-export const marineSchema = z.object({
-	hourly: z
-		.object({
-			time: z.array(z.string()),
-			sea_level_height_msl: z.array(z.number().nullable()),
-			wave_height: z.array(z.number().nullable())
-		})
-		.optional()
-});

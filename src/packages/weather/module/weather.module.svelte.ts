@@ -75,14 +75,24 @@ class WeatherModule {
 		}
 	}
 
-	async search(rawQuery: string): Promise<void> {
+	/** `silent` evita toast de erro — usado na busca automática enquanto o usuário digita. */
+	async search(rawQuery: string, options: { silent?: boolean } = {}): Promise<void> {
 		this.statusValue = 'searching';
 		this.resultsValue = [];
 
 		try {
 			await this.runSearch(rawQuery);
 		} catch (error) {
-			this.fail(error);
+			this.fail(error, options.silent);
+		}
+	}
+
+	/** Limpa resultados da busca ao vivo quando o texto fica curto demais para consultar. */
+	clearSearch(): void {
+		this.resultsValue = [];
+
+		if (this.statusValue !== 'loading') {
+			this.statusValue = 'idle';
 		}
 	}
 
@@ -116,9 +126,12 @@ class WeatherModule {
 		this.statusValue = 'idle';
 	}
 
-	private fail(error: unknown): void {
+	private fail(error: unknown, silent = false): void {
 		this.statusValue = 'error';
-		notificationsModule.notifyError(this.messageFor(error));
+
+		if (!silent) {
+			notificationsModule.notifyError(this.messageFor(error));
+		}
 	}
 
 	private messageFor(error: unknown): string {

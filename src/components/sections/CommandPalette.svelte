@@ -40,6 +40,9 @@
 		openPalette();
 	}
 
+	const SEARCH_DEBOUNCE_MS = 400;
+	const MIN_QUERY_LENGTH = 2;
+
 	function submit(event: SubmitEvent): void {
 		event.preventDefault();
 		if (canSubmit) {
@@ -54,17 +57,26 @@
 		}
 	});
 
-	// Fecha apenas quando um snapshot NOVO chega (cidade recém-carregada),
-	// não enquanto o status permanece 'ready' — senão o modal fecharia ao reabrir.
-	let lastSnapshot = weatherModule.snapshot;
+	// Busca automaticamente enquanto o usuário digita (com debounce), sem precisar
+	// de Enter/Buscar. Erros ficam silenciosos aqui — a busca explícita já avisa.
 	$effect(() => {
-		const snapshot = weatherModule.snapshot;
+		const value = query.trim();
 
-		if (open && snapshot && snapshot !== lastSnapshot) {
-			closePalette();
+		if (value.length < MIN_QUERY_LENGTH) {
+			weatherModule.clearSearch();
+			return;
 		}
 
-		lastSnapshot = snapshot;
+		const timer = setTimeout(() => weatherModule.search(value, { silent: true }), SEARCH_DEBOUNCE_MS);
+		return () => clearTimeout(timer);
+	});
+
+	// Fecha assim que uma cidade é escolhida (status vira 'loading'), revelando
+	// a tela principal com skeleton por trás — não espera o snapshot terminar de carregar.
+	$effect(() => {
+		if (open && weatherModule.status === 'loading') {
+			closePalette();
+		}
 	});
 </script>
 
@@ -97,7 +109,6 @@
 		>
 			<form onsubmit={submit} class="flex items-center gap-3 border-b border-border-subtle px-4 py-3">
 				<Search class="size-5 shrink-0 text-content-muted" />
-				<!-- svelte-ignore a11y_autofocus -->
 				<input
 					bind:this={inputEl}
 					bind:value={query}

@@ -7,16 +7,14 @@ import {
 import {
 	NOMINATIM_REVERSE_URL,
 	NOMINATIM_SEARCH_URL,
-	OPEN_METEO_FORECAST_URL,
-	OPEN_METEO_MARINE_URL
+	OPEN_METEO_FORECAST_URL
 } from '../constants/endpoints';
 import type { City } from '../types/domain';
-import type { BriefResponseDTO, ForecastResponseDTO, GeoResultDTO, MarineDTO } from '../types/dto';
+import type { BriefResponseDTO, ForecastResponseDTO, GeoResultDTO } from '../types/dto';
 import {
 	briefResponseSchema,
 	forecastResponseSchema,
 	geoResponseSchema,
-	marineSchema,
 	reverseGeoSchema
 } from '../validators/schemas';
 import { getJson } from './http-client';
@@ -72,16 +70,6 @@ export const weatherGateway = {
 			'accept-language': GEO_LANGUAGE
 		});
 		return getJson(url, reverseGeoSchema) as Promise<GeoResultDTO>;
-	},
-
-	fetchMarine(city: City): Promise<MarineDTO> {
-		const url = withParams(OPEN_METEO_MARINE_URL, {
-			...coords(city),
-			hourly: 'sea_level_height_msl,wave_height',
-			timezone: 'auto',
-			forecast_days: '1'
-		});
-		return getJson(url, marineSchema);
 	}
 };
 

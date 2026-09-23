@@ -51,11 +51,3 @@ export interface BriefResponseDTO {
 		is_day: number;
 	};
 }
-
-export interface MarineDTO {
-	hourly?: {
-		time: string[];
-		sea_level_height_msl: Array<number | null>;
-		wave_height: Array<number | null>;
-	};
-}

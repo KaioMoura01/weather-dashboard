@@ -6,8 +6,6 @@ import { toCurrentWeather } from './current.mapper';
 import { describeWeatherCode } from './weather-code';
 import { toForecastDays } from './forecast.mapper';
 import { toHourlyPrecip } from './hourly.mapper';
-import { EMPTY_TIDE_REPORT, toTideReport } from './tide.mapper';
-import type { TideReport } from '../types/domain';
 
 /** Business rules for the weather domain. Orchestrates Gateway + mappers. */
 export const weatherService = {
@@ -18,17 +16,13 @@ export const weatherService = {
 	},
 
 	async loadSnapshot(city: City): Promise<WeatherSnapshot> {
-		const [forecast, tide] = await Promise.all([
-			weatherGateway.fetchForecast(city),
-			loadTide(city)
-		]);
+		const forecast = await weatherGateway.fetchForecast(city);
 
 		return {
 			city,
 			current: toCurrentWeather(forecast, city),
 			forecast: toForecastDays(forecast),
-			hourly: toHourlyPrecip(forecast),
-			tide
+			hourly: toHourlyPrecip(forecast)
 		};
 	},
 
@@ -41,16 +35,6 @@ export const weatherService = {
 		return Promise.all(cities.map((city) => loadBrief(city)));
 	}
 };
-
-/** Maré é um extra: falha de rede ou local sem cobertura marinha não deve derrubar a consulta principal. */
-async function loadTide(city: City): Promise<TideReport> {
-	try {
-		const marine = await weatherGateway.fetchMarine(city);
-		return toTideReport(marine);
-	} catch {
-		return EMPTY_TIDE_REPORT;
-	}
-}
 
 async function loadBrief(city: City): Promise<CityBrief> {
 	const brief = await weatherGateway.fetchBrief(city);

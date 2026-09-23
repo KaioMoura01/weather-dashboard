@@ -38,23 +38,11 @@ export interface HourlyPrecip {
 	probability: number;
 }
 
-export interface TidePoint {
-	isoTime: string;
-	heightMeters: number;
-}
-
-export interface TideReport {
-	isCoastal: boolean;
-	points: TidePoint[];
-	maxWaveHeight: number | null;
-}
-
 export interface WeatherSnapshot {
 	city: City;
 	current: CurrentWeather;
 	forecast: ForecastDay[];
 	hourly: HourlyPrecip[];
-	tide: TideReport;
 }
 
 export interface CityBrief {
