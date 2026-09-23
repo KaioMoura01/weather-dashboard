@@ -1,20 +1,20 @@
 import type { TidePoint, TideReport } from '../types/domain';
 import type { MarineDTO } from '../types/dto';
 
-const EMPTY_REPORT: TideReport = { isCoastal: false, points: [], maxWaveHeight: null };
+export const EMPTY_TIDE_REPORT: TideReport = { isCoastal: false, points: [], maxWaveHeight: null };
 
 /** Builds a tide report; a location is "coastal" only when sea-level data exists. */
 export function toTideReport(dto: MarineDTO): TideReport {
 	const hourly = dto.hourly;
 
 	if (!hourly) {
-		return EMPTY_REPORT;
+		return EMPTY_TIDE_REPORT;
 	}
 
 	const points = collectPoints(hourly.time, hourly.sea_level_height_msl);
 
 	if (points.length === 0) {
-		return EMPTY_REPORT;
+		return EMPTY_TIDE_REPORT;
 	}
 
 	return {
