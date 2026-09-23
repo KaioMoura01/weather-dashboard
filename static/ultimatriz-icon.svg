@@ -1,0 +1,28 @@
+<svg width="365" height="450" viewBox="0 0 364.5 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ultimatriz">
+  <defs>
+    <linearGradient id="um-base" x1="0" y1="0.5" x2="1" y2="0.5">
+      <stop offset="0" stop-color="#7fd0ff"/>
+      <stop offset="0.1" stop-color="#3b82f6"/>
+      <stop offset="0.22" stop-color="#1b3a73"/>
+      <stop offset="0.3" stop-color="#3b82f6"/>
+      <stop offset="0.35" stop-color="#17305f"/>
+      <stop offset="0.35" stop-color="#4a2fd1"/>
+      <stop offset="0.5" stop-color="#2f1a8c"/>
+      <stop offset="0.65" stop-color="#4a2fd1"/>
+      <stop offset="0.65" stop-color="#6d4aff"/>
+      <stop offset="0.74" stop-color="#8f72e8"/>
+      <stop offset="0.86" stop-color="#c9b8ff"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="um-sheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.3"/>
+      <stop offset="0.18" stop-color="#ffffff" stop-opacity="0.04"/>
+      <stop offset="0.4" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.62" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="0.85" stop-color="#000000" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.24"/>
+    </linearGradient>
+  </defs>
+  <path d="M0.00,333.62C0.00,7.76,0.00,0.00,0.00,0.00C0.00,0.00,126.78,93.10,126.78,93.10L126.78,287.07L182.25,325.86L237.72,287.07L237.72,85.34L364.50,0.00L364.50,333.62L182.25,450.00L126.83,414.61L0.00,333.62M126.78,287.07" fill="url(#um-base)"/>
+  <path d="M0.00,333.62C0.00,7.76,0.00,0.00,0.00,0.00C0.00,0.00,126.78,93.10,126.78,93.10L126.78,287.07L182.25,325.86L237.72,287.07L237.72,85.34L364.50,0.00L364.50,333.62L182.25,450.00L126.83,414.61L0.00,333.62M126.78,287.07" fill="url(#um-sheen)"/>
+</svg>

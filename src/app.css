@@ -1,30 +1,40 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/inter-tight';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource/michroma';
 
 /* Dark mode driven by a class on <html> (toggled by ThemeModule). */
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
 	--font-sans:
-		'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+		'Inter Tight Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	--font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+	--font-brand: 'Michroma', var(--font-sans);
 
-	--color-surface: hsl(210 40% 98%);
+	/* Ultimatriz — Design System (ver assets/DESIGN_SYSTEM.md no monorepo ultimatriz) */
+	--color-surface: hsl(240 100% 98%);
 	--color-surface-elevated: hsl(0 0% 100%);
-	--color-border-subtle: hsl(214 32% 91%);
-	--color-content: hsl(222 47% 11%);
-	--color-content-muted: hsl(215 16% 47%);
-	--color-brand: hsl(217 91% 60%);
+	--color-border-subtle: hsl(240 30% 88%);
+	--color-content: hsl(231 48% 5%);
+	--color-content-muted: hsl(226 17% 45%);
+	--color-brand: hsl(252 100% 55%);
+	--color-brand-2: hsl(217 91% 50%);
+	--color-brand-3: hsl(255 70% 60%);
 	--color-brand-contrast: hsl(0 0% 100%);
 }
 
 .dark {
-	--color-surface: hsl(222 47% 11%);
-	--color-surface-elevated: hsl(217 33% 17%);
-	--color-border-subtle: hsl(217 19% 27%);
-	--color-content: hsl(210 40% 98%);
-	--color-content-muted: hsl(215 20% 65%);
-	--color-brand: hsl(217 91% 65%);
-	--color-brand-contrast: hsl(222 47% 11%);
+	--color-surface: hsl(231 48% 5%);
+	--color-surface-elevated: hsl(228 53% 9%);
+	--color-border-subtle: hsl(219 40% 20%);
+	--color-content: hsl(240 100% 98%);
+	--color-content-muted: hsl(226 17% 65%);
+	--color-brand: hsl(252 100% 65%);
+	--color-brand-2: hsl(217 91% 60%);
+	--color-brand-3: hsl(255 92% 76%);
+	--color-brand-contrast: hsl(240 100% 98%);
 }
 
 /* Typography scale mandated by CLAUDE.md. */
@@ -95,10 +105,55 @@
 	line-height: 1.5rem;
 }
 
+@utility glow-brand {
+	box-shadow: 0 0 0 transparent;
+	transition: box-shadow 0.2s ease;
+}
+.glow-brand:hover,
+.glow-brand:focus-visible {
+	box-shadow: 0 0 24px -6px var(--color-brand-2);
+}
+
 html {
 	font-family: var(--font-sans);
 	background-color: var(--color-surface);
 	color: var(--color-content);
+}
+
+/* Selo de autoria — identidade Ultimatriz no rodapé. */
+.ultimatriz-credit {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	opacity: 0.85;
+	transition: opacity 0.2s ease;
+}
+.ultimatriz-credit:hover {
+	opacity: 1;
+}
+.ultimatriz-credit img {
+	height: 1.25rem;
+	width: auto;
+}
+.ultimatriz-credit-text {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	line-height: 1;
+}
+.ultimatriz-credit-word {
+	font-family: var(--font-brand);
+	font-size: 0.625rem;
+	letter-spacing: 0.16em;
+	color: var(--color-content);
+}
+.ultimatriz-credit-tag {
+	font-family: var(--font-mono);
+	font-size: 0.5625rem;
+	font-weight: 500;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--color-content-muted);
 }
 
 body {
