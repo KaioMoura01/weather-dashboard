@@ -40,5 +40,8 @@
     "@fontsource/michroma": "^5.1.0",
     "lucide-svelte": "^0.454.0",
     "zod": "^3.23.8"
+  },
+  "engines": {
+    "node": "24.x"
   }
 }
