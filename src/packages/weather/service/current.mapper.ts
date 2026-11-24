@@ -16,6 +16,8 @@ export function toCurrentWeather(dto: ForecastResponseDTO, city: City): CurrentW
 		pressure: Math.round(current.surface_pressure),
 		description: describeWeatherCode(current.weather_code),
 		weatherCode: current.weather_code,
-		isDay: current.is_day === 1
+		isDay: current.is_day === 1,
+		uvIndex: Math.round((current.uv_index ?? 0) * 10) / 10,
+		localTime: current.time
 	};
 }

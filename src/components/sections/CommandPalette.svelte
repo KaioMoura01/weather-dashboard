@@ -85,11 +85,11 @@
 <button
 	type="button"
 	onclick={openPalette}
-	class="flex w-full items-center gap-3 rounded-xl border border-border-subtle bg-surface-elevated px-4 py-3 text-left text-content-muted transition-colors hover:bg-surface"
+	class="glass-card flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-content-muted transition-colors hover:border-brand/60"
 >
 	<Search class="size-5" />
-	<span class="paragraph-md flex-1">Buscar cidade…</span>
-	<kbd class="label-md rounded-md border border-border-subtle px-2 py-0.5">Ctrl K</kbd>
+	<span class="paragraph-md flex-1">Buscar cidade, estado ou país…</span>
+	<kbd class="label-md hidden rounded-md border border-border-subtle sm:block px-2 py-0.5">Ctrl K</kbd>
 </button>
 
 {#if open}

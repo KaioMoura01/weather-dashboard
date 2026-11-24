@@ -19,6 +19,9 @@ export interface CurrentWeather {
 	description: string;
 	weatherCode: number;
 	isDay: boolean;
+	uvIndex: number;
+	/** Hora local da cidade (ISO sem fuso), usada para posicionar o sol. */
+	localTime: string;
 }
 
 export interface ForecastDay {
@@ -31,6 +34,7 @@ export interface ForecastDay {
 	sunset: string;
 	windMax: number;
 	rainChance: number;
+	uvMax: number;
 }
 
 export interface HourlyPrecip {
@@ -38,11 +42,19 @@ export interface HourlyPrecip {
 	probability: number;
 }
 
+export interface HourlyForecast {
+	isoTime: string;
+	temp: number;
+	weatherCode: number;
+	isDay: boolean;
+}
+
 export interface WeatherSnapshot {
 	city: City;
 	current: CurrentWeather;
 	forecast: ForecastDay[];
 	hourly: HourlyPrecip[];
+	hourlyForecast: HourlyForecast[];
 }
 
 export interface CityBrief {

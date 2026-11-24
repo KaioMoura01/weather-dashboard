@@ -30,6 +30,8 @@ export const geoResponseSchema = z.array(
 
 export const forecastResponseSchema = z.object({
 	current: z.object({
+		time: z.string(),
+		uv_index: z.number().nullable().optional(),
 		temperature_2m: z.number(),
 		apparent_temperature: z.number(),
 		relative_humidity_2m: z.number(),
@@ -40,9 +42,13 @@ export const forecastResponseSchema = z.object({
 	}),
 	hourly: z.object({
 		time: z.array(z.string()),
-		precipitation_probability: z.array(z.number().nullable())
+		precipitation_probability: z.array(z.number().nullable()),
+		temperature_2m: z.array(z.number()),
+		weather_code: z.array(z.number()),
+		is_day: z.array(z.number())
 	}),
 	daily: z.object({
+		uv_index_max: z.array(z.number().nullable()),
 		time: z.array(z.string()),
 		weather_code: z.array(z.number()),
 		temperature_2m_max: z.array(z.number()),
@@ -79,4 +85,3 @@ export const reverseGeoSchema = z.object({
 		})
 		.optional()
 });
-

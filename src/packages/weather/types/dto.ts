@@ -20,6 +20,8 @@ export interface GeoResultDTO {
 
 export interface ForecastResponseDTO {
 	current: {
+		time: string;
+		uv_index?: number | null;
 		temperature_2m: number;
 		apparent_temperature: number;
 		relative_humidity_2m: number;
@@ -31,8 +33,12 @@ export interface ForecastResponseDTO {
 	hourly: {
 		time: string[];
 		precipitation_probability: Array<number | null>;
+		temperature_2m: number[];
+		weather_code: number[];
+		is_day: number[];
 	};
 	daily: {
+		uv_index_max: Array<number | null>;
 		time: string[];
 		weather_code: number[];
 		temperature_2m_max: number[];

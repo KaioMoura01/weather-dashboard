@@ -5,7 +5,7 @@ import { toCities, toCity } from './city.mapper';
 import { toCurrentWeather } from './current.mapper';
 import { describeWeatherCode } from './weather-code';
 import { toForecastDays } from './forecast.mapper';
-import { toHourlyPrecip } from './hourly.mapper';
+import { toHourlyForecast, toHourlyPrecip } from './hourly.mapper';
 
 /** Business rules for the weather domain. Orchestrates Gateway + mappers. */
 export const weatherService = {
@@ -22,7 +22,8 @@ export const weatherService = {
 			city,
 			current: toCurrentWeather(forecast, city),
 			forecast: toForecastDays(forecast),
-			hourly: toHourlyPrecip(forecast)
+			hourly: toHourlyPrecip(forecast),
+			hourlyForecast: toHourlyForecast(forecast)
 		};
 	},
 

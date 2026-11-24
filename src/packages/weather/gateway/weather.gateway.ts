@@ -20,10 +20,10 @@ import {
 import { getJson } from './http-client';
 
 const CURRENT_FIELDS =
-	'temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,surface_pressure,weather_code,is_day';
-const HOURLY_FIELDS = 'precipitation_probability';
+	'temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,surface_pressure,weather_code,is_day,uv_index';
+const HOURLY_FIELDS = 'precipitation_probability,temperature_2m,weather_code,is_day';
 const DAILY_FIELDS =
-	'weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,wind_speed_10m_max,precipitation_probability_max';
+	'weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,wind_speed_10m_max,precipitation_probability_max,uv_index_max';
 
 /** HTTP boundary for the weather domain. Builds URLs, never applies business rules. */
 export const weatherGateway = {

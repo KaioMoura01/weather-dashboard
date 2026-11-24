@@ -15,6 +15,7 @@ export function toForecastDays(dto: ForecastResponseDTO): ForecastDay[] {
 		sunrise: daily.sunrise[index],
 		sunset: daily.sunset[index],
 		windMax: Math.round(daily.wind_speed_10m_max[index]),
-		rainChance: daily.precipitation_probability_max[index] ?? 0
+		rainChance: daily.precipitation_probability_max[index] ?? 0,
+		uvMax: Math.round((daily.uv_index_max[index] ?? 0) * 10) / 10
 	}));
 }

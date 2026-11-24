@@ -1,3 +1,5 @@
+import { unitsModule } from '$packages/units/module/units.module.svelte';
+
 /** Presentation-only formatters shared by composes. No domain logic. */
 const weekdayFormatter = new Intl.DateTimeFormat('pt-BR', { weekday: 'short' });
 const timeFormatter = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -11,7 +13,7 @@ export function formatTime(isoTime: string): string {
 }
 
 export function formatTemperature(value: number): string {
-	return `${value}°`;
+	return `${unitsModule.display(value)}°`;
 }
 
 export function formatHour(isoTime: string): string {
@@ -26,4 +28,11 @@ export function formatFullDate(isoDate: string): string {
 	return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'long' }).format(
 		new Date(`${isoDate}T12:00:00`)
 	);
+}
+
+export function formatDuration(totalMinutes: number): string {
+	const hours = Math.floor(totalMinutes / 60);
+	const minutes = totalMinutes % 60;
+
+	return hours > 0 ? `${hours}h ${String(minutes).padStart(2, '0')}min` : `${minutes}min`;
 }

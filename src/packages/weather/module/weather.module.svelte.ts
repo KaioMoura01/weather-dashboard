@@ -23,6 +23,7 @@ class WeatherModule {
 	private snapshotValue = $state<WeatherSnapshot | null>(null);
 	private selectedIndexValue = $state(0);
 	private locatingValue = $state(false);
+	private updatedAtValue = $state<number | null>(null);
 
 	get status(): Status {
 		return this.statusValue;
@@ -44,12 +45,33 @@ class WeatherModule {
 		return this.snapshotValue?.forecast[this.selectedIndexValue] ?? null;
 	}
 
+	get updatedAt(): number | null {
+		return this.updatedAtValue;
+	}
+
+	get isRefreshing(): boolean {
+		return this.statusValue === 'loading';
+	}
+
 	get isToday(): boolean {
 		return this.selectedIndexValue === 0;
 	}
 
 	get isBusy(): boolean {
 		return this.statusValue === 'searching' || this.statusValue === 'loading' || this.locatingValue;
+	}
+
+	/** Recarrega a cidade atual mantendo o dia selecionado. */
+	async refresh(): Promise<void> {
+		const city = this.snapshotValue?.city;
+		const keep = this.selectedIndexValue;
+
+		if (!city || this.isRefreshing) {
+			return;
+		}
+
+		await this.select(city);
+		this.selectedIndexValue = keep;
 	}
 
 	selectDay(index: number): void {
@@ -103,6 +125,7 @@ class WeatherModule {
 		try {
 			this.snapshotValue = await weatherService.loadSnapshot(city);
 			this.selectedIndexValue = 0;
+			this.updatedAtValue = Date.now();
 			this.statusValue = 'ready';
 			historyModule.record(city);
 		} catch (error) {

@@ -1,6 +1,7 @@
+import { tick } from 'svelte';
 import { themeGateway } from '../gateway/theme.gateway';
 import { themeService } from '../service/theme.service';
-import type { Theme } from '../types/theme';
+import type { Theme, ThemeOrigin } from '../types/theme';
 
 /** Reactive facade for the light/dark theme. */
 class ThemeModule {
@@ -18,8 +19,13 @@ class ThemeModule {
 		this.set(themeService.resolveInitial());
 	}
 
-	toggle(): void {
-		this.set(themeService.toggle(this.active));
+	async toggle(origin: ThemeOrigin): Promise<void> {
+		const next = themeService.toggle(this.active);
+
+		await themeGateway.animate(async () => {
+			this.set(next);
+			await tick();
+		}, origin);
 	}
 
 	private set(theme: Theme): void {
